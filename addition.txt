@@ -1,0 +1,48 @@
+What is 2 + 2?
+four
+4
+4.0
+What is 9 + 4?
+thirteen
+13
+13.0
+What is 10 + 10?
+twenty
+20
+20.0
+What is 11 + 69?
+eighty
+80
+80.0
+What is 45 + 62?
+one hundred seven
+107
+107.0
+What is 59 + 0?
+fifty-nine
+59
+59.0
+What is 101 + 99?
+two hundred
+200
+200.0
+What is 430 + 23?
+five hundred fifty-three
+553
+553.0
+What is 74 + 123?
+one hundred ninety-seven
+197
+197.0
+What is 48 + 349?
+three hundred ninety-seven
+397
+397.0
+What is 852 + 941?
+one thousand seven hundred ninety-three
+1793
+1793.0
+What is 1000 + 1000 + 1000?
+three thousand
+3000
+3000.0
