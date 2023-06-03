@@ -26,7 +26,7 @@ public class mathtraininggame{
 		
 		//  [**] put a loop if they do not choose any option, than it loops back until they choose one
 		if(chrMenu == 'p' || chrMenu == 'P'){
-			con.println("play");
+			playMenu(con);
 		}else if(chrMenu == 's' || chrMenu == 'S'){
 			con.println("scoreboard");
 		}else if(chrMenu == 'h' || chrMenu == 'H'){
@@ -38,12 +38,49 @@ public class mathtraininggame{
 			con.clear();
 			mathMenu(con);
 		}
-		
-		
-		
-		
-		
+	
 	}
+	public static void playMenu(Console con){
+		con.clear();
+		con.println("What is you username?");
+		String strUser = con.readLine();
 		
+		
+		con.clear();
+		TextInputFile txtQuizzes = new TextInputFile("quizzes.txt");
+		con.println("OPTIONS:");
+		
+		String strQuizList;
+		while(!txtQuizzes.eof()){
+			strQuizList = txtQuizzes.readLine();
+			con.println(strQuizList);
+		}
+		txtQuizzes.close();
+		
+		con.println("\nPlease type in a quiz name");
+		String strQuizName = con.readLine();
+		
+		//[**] Add something where if they choose a quiz not on the list, it tells them to choose again
+	
+		strQuizName = strQuizName + ".txt";
+		//txtQuizzes = new TextInputFile(strQuiz);
+		
+		String strQuiz[][];
+		int intCount = countEntries();
+		//while(!txtQuizzes.eof()){
+			//strQuizList = txtQuizzes.readLine();
+			//con.println(strQuizList);
+			//// Making sure that it only prints out question and not answers
+			//strQuizList = txtQuizzes.readLine();
+			//strQuizList = txtQuizzes.readLine();
+			//trQuizList = txtQuizzes.readLine();
+		//}	
+	}
+	public static int countEntries(){
+		//TextInputFile
+		return 0;
+	}
+			
+			
 	
 }
