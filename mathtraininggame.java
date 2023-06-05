@@ -63,22 +63,46 @@ public class mathtraininggame{
 		//[**] Add something where if they choose a quiz not on the list, it tells them to choose again
 	
 		strQuizName = strQuizName + ".txt";
-		//txtQuizzes = new TextInputFile(strQuiz);
+		TextInputFile txtQuizInitialization = new TextInputFile(strQuizName);
 		
 		String strQuiz[][];
-		int intCount = countEntries();
+		// get size of array
+		// put questions and answeres into array
+		// Store answers into a variable that allows for comparison with user input
+		// 
 		//while(!txtQuizzes.eof()){
 			//strQuizList = txtQuizzes.readLine();
 			//con.println(strQuizList);
 			//// Making sure that it only prints out question and not answers
 			//strQuizList = txtQuizzes.readLine();
 			//strQuizList = txtQuizzes.readLine();
-			//trQuizList = txtQuizzes.readLine();
+			//strQuizList = txtQuizzes.readLine();
 		//}	
 	}
-	public static int countEntries(){
-		//TextInputFile
-		return 0;
+	public static int countEntries(String strQuizName){
+		TextInputFile txtEntry = new TextInputFile(strQuizName);
+		int intLines = 0;
+		String strData;
+		while(!txtEntry.eof()){
+			strData = txtEntry.readLine();
+			intLines = intLines + 1;
+		}
+		txtEntry.close();
+		return intLines / 4;
+	}
+	public static String[][] loadQuestions(int intCount, String strQuizName){
+		String strOrder[][] = new String[intCount][4];
+		TextInputFile txtEntry = new TextInputFile(strQuizName);
+		int intRow;
+		for(intRow = 0; intRow < intCount; intRow++){
+			strOrder[intRow][0] = txtEntry.readLine();
+			strOrder[intRow][1] = txtEntry.readLine();
+			strOrder[intRow][2] = txtEntry.readLine();
+			strOrder[intRow][3] = txtEntry.readLine();
+		}
+		txtEntry.close();
+		return strOrder;
+		
 	}
 			
 			
