@@ -59,6 +59,11 @@ public class mathtraininggame{
 		
 		con.println("\nPlease type in a quiz name");
 		String strQuizName = con.readLine();
+		con.clear();
+		
+		con.setDrawColor(Color.BLACK);
+		con.fillRect(0,0,1280,720);
+		con.repaint();
 		
 		//[**] Add something where if they choose a quiz not on the list, it tells them to choose again
 	
@@ -66,18 +71,10 @@ public class mathtraininggame{
 		TextInputFile txtQuizInitialization = new TextInputFile(strQuizName);
 		
 		String strQuiz[][];
-		// get size of array
-		// put questions and answeres into array
-		// Store answers into a variable that allows for comparison with user input
-		// 
-		//while(!txtQuizzes.eof()){
-			//strQuizList = txtQuizzes.readLine();
-			//con.println(strQuizList);
-			//// Making sure that it only prints out question and not answers
-			//strQuizList = txtQuizzes.readLine();
-			//strQuizList = txtQuizzes.readLine();
-			//strQuizList = txtQuizzes.readLine();
-		//}	
+		int intCount = countEntries(strQuizName);
+		strQuiz = loadQuestions(intCount, strQuizName);
+		printQuestions(strQuiz, intCount, strUser, strQuizName, con);
+
 	}
 	public static int countEntries(String strQuizName){
 		TextInputFile txtEntry = new TextInputFile(strQuizName);
@@ -89,6 +86,7 @@ public class mathtraininggame{
 		}
 		txtEntry.close();
 		return intLines / 4;
+		
 	}
 	public static String[][] loadQuestions(int intCount, String strQuizName){
 		String strOrder[][] = new String[intCount][4];
@@ -103,6 +101,41 @@ public class mathtraininggame{
 		txtEntry.close();
 		return strOrder;
 		
+	}
+	public static void printQuestions(String strQuiz[][], int intCount, String strUser, String strQuizName, Console con){
+		int intRow;
+		String strAnswer;
+		
+		double dblScore = 0;
+		double dblQuestions = 0;
+		double dblPercent = 0;
+		
+		for(intRow = 0; intRow < intCount; intRow++){
+			
+			
+			con.println(strUser+"						"+strQuizName+"		"+"SCORE:"+dblScore+"/"+dblQuestions+"	Percent:"+dblPercent+"%");
+			con.println("\n\n\n\n");
+			con.println(strQuiz[intRow][0]);
+			con.println("[TYPE ANSWER BELOW]");
+			strAnswer = con.readLine();
+			if(strAnswer.equals(strQuiz[intRow][1]) || strAnswer.equals(strQuiz[intRow][2]) || strAnswer.equals(strQuiz[intRow][3])){
+				con.println("CORRECT");
+				con.sleep(1000);
+				
+				dblScore++;
+				dblQuestions++;
+				con.clear();
+			}else{
+				con.println("INCORRECT");
+				con.sleep(1000);
+				
+				dblQuestions++;
+				con.clear();
+			}
+			
+			dblPercent = dblScore / dblQuestions * 100.0;
+		}
+
 	}
 			
 			
