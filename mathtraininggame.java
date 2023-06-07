@@ -29,11 +29,33 @@ public class mathtraininggame{
 			playMenu(con);
 		}else if(chrMenu == 's' || chrMenu == 'S'){
 			con.println("scoreboard");
+			// bubble sort
 		}else if(chrMenu == 'h' || chrMenu == 'H'){
-			// [*****] Finish help option as game goes on.
+			
 			con.clear();
 			con.println("HELP:");
-			con.println("Try playing the game by pressing 'PLAY (p)'!");
+			con.println("Try playing the game by pressing 'PLAY (p)' in the menu");
+			con.println("First enter your username you want displayed");
+			con.println("Then type in the name of a quiz you would like to play");
+			con.println("Make sure the quiz name is spelled correctly (including cases)");
+			con.println("You will be given a question. Try to solve it!");
+			con.println("Then enter your answer into the quiz");
+			con.println("There will always be three possible answers");
+			con.println("Good luck!");
+			con.println("Press any key to go back to the main menu");
+
+			char chrBack = con.getChar();
+			if(chrBack == 'a'){
+				con.clear();
+				mathMenu(con);
+			}else{
+				con.clear();
+				mathMenu(con);
+			}
+			
+		}else{
+			con.println("Invalid option");
+			con.println("Choose again");	
 			con.sleep(1000);
 			con.clear();
 			mathMenu(con);
@@ -120,22 +142,44 @@ public class mathtraininggame{
 			strAnswer = con.readLine();
 			if(strAnswer.equals(strQuiz[intRow][1]) || strAnswer.equals(strQuiz[intRow][2]) || strAnswer.equals(strQuiz[intRow][3])){
 				con.println("CORRECT");
-				con.sleep(1000);
+				//con.sleep(1000);
 				
 				dblScore++;
 				dblQuestions++;
 				con.clear();
+				dblPercent = dblScore / dblQuestions * 100.0;
 			}else{
 				con.println("INCORRECT");
-				con.sleep(1000);
+				//con.sleep(1000);
 				
 				dblQuestions++;
 				con.clear();
+				dblPercent = dblScore / dblQuestions * 100.0;
 			}
 			
-			dblPercent = dblScore / dblQuestions * 100.0;
 		}
+		
+		con.println("Printing PERCENT to scoreboard");
+		TextOutputFile txtScoreboard = new TextOutputFile("scoreboard.txt",true);
+				
+		txtScoreboard.println(strUser);
+		txtScoreboard.println(dblPercent);
+		
+		con.sleep(1000);
+		con.clear();
+		
+		//mainMenuAdd(con);
 
+	}
+	public static void mainMenuAddQuiz(Console con){
+		// new main menu when done
+		
+		
+	}
+	public static String scoreboard(Console con){
+		TextInputFile txtScoreboard = new TextInputFile("scoreboard.txt");
+		// bubble sort
+		return "[placeholder]";
 	}
 			
 			
