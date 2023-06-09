@@ -159,18 +159,71 @@ public class mathtraininggame{
 			
 		}
 		
+		// we need to bubble sort it in the array itself
 		con.println("Printing PERCENT to scoreboard");
 		TextOutputFile txtScoreboard = new TextOutputFile("scoreboard.txt",true);
 				
 		txtScoreboard.println(strUser);
 		txtScoreboard.println(dblPercent);
 		
+		txtScoreboard.close();
+		
+		
 		con.sleep(1000);
 		con.clear();
+		
+		TextInputFile txtScoreboard2 = new TextInputFile("scoreboard.txt");
+		
+		intRow = 0;
+		String strScoreboard[][];
+		
+		while(!txtScoreboard2.eof()){
+			
+			String strScoreboard[][] = new String[intRow][2];
+			strScoreboard[intRow][0] = txtScoreboard2.readLine();
+			strScoreboard[intRow][1] = txtScoreboard2.readLine();
+			
+			intRow++;
+	
+		}
+		
+		int intBelow;
+		int intCurrent;
+		int intCounter;
+		int intCounter2;
+		String strTemp;
+		
+		for(intCounter2 = 0; intCounter2 < intCount - 1; intCounter2++){
+			
+			for(intCounter = 0; intCounter < intCount- intCounter2 -1; intCounter++){
+				
+				intBelow = Integer.parseInt(strScoreboard[intCounter+1][2]);
+				intCurrent = Integer.parseInt(strScoreboard[intCounter][2]);
+				
+				if(intBelow > intCurrent){
+					strTemp = strScoreboard[intCounter+1][2];
+					
+					strScoreboard[intCounter+1][2] = strScoreboard[intCounter][2];
+					strScoreboard[intCounter][2] = strTemp;
+					
+					strTemp = strScoreboard[intCounter+1][1];
+					strScoreboard[intCounter+1][1] = strScoreboard[intCounter][1];
+					strScoreboard[intCounter][1] = strTemp;
+					
+					strTemp = strScoreboard[intCounter+1][0];
+					strScoreboard[intCounter+1][0] = strScoreboard[intCounter][0];
+					strScoreboard[intCounter][0] = strTemp;
+				}
+			}
+		}
+		
+		
+			
 		
 		//mainMenuAdd(con);
 
 	}
+
 	public static void mainMenuAddQuiz(Console con){
 		// new main menu when done
 		
