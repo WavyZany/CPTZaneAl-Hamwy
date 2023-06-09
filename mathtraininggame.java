@@ -174,18 +174,32 @@ public class mathtraininggame{
 		
 		TextInputFile txtScoreboard2 = new TextInputFile("scoreboard.txt");
 		
-		intRow = 0;
-		String strScoreboard[][];
+		
 		
 		while(!txtScoreboard2.eof()){
-			
-			String strScoreboard[][] = new String[intRow][2];
-			strScoreboard[intRow][0] = txtScoreboard2.readLine();
-			strScoreboard[intRow][1] = txtScoreboard2.readLine();
-			
+			String strReadLine = txtScoreboard2.readLine();
 			intRow++;
-	
+			System.out.println("INSIDE LOOP");
 		}
+		
+		txtScoreboard2.close();
+		
+		TextInputFile txtScoreboard3 = new TextInputFile("scoreboard.txt");
+		
+	
+		String strScoreboard[][] = new String[intRow][2];
+		
+		System.out.println("Test");
+		
+		while(!txtScoreboard3.eof()){
+			System.out.println("Test1");
+			strScoreboard[intRow -1][0] = txtScoreboard3.readLine();
+			strScoreboard[intRow -1][1] = txtScoreboard3.readLine();
+		}
+		
+		
+		System.out.println("Test2");
+		
 		
 		int intBelow;
 		int intCurrent;
@@ -197,14 +211,18 @@ public class mathtraininggame{
 			
 			for(intCounter = 0; intCounter < intCount- intCounter2 -1; intCounter++){
 				
-				intBelow = Integer.parseInt(strScoreboard[intCounter+1][2]);
-				intCurrent = Integer.parseInt(strScoreboard[intCounter][2]);
+				System.out.println("JIN");
+				
+				intBelow = Integer.parseInt(strScoreboard[intCounter+1][1]);
+				intCurrent = Integer.parseInt(strScoreboard[intCounter][1]);
+				
+				System.out.println("EDWARD");
 				
 				if(intBelow > intCurrent){
-					strTemp = strScoreboard[intCounter+1][2];
+					strTemp = strScoreboard[intCounter+1][1];
 					
-					strScoreboard[intCounter+1][2] = strScoreboard[intCounter][2];
-					strScoreboard[intCounter][2] = strTemp;
+					strScoreboard[intCounter+1][1] = strScoreboard[intCounter][1];
+					strScoreboard[intCounter][1] = strTemp;
 					
 					strTemp = strScoreboard[intCounter+1][1];
 					strScoreboard[intCounter+1][1] = strScoreboard[intCounter][1];
@@ -217,24 +235,35 @@ public class mathtraininggame{
 			}
 		}
 		
+		txtScoreboard2.close();
+		
+		System.out.println("Edward");
+		
+		int intCounting = 0;
+		while(intCounting < intRow){
+			con.println(strScoreboard[intRow][0]);
+			con.println(strScoreboard[intRow][1]);
+			intCounting++;
+			System.out.println("Edward");
+		}
+		
+		
+		
+	}
+		
+
+		
 		
 			
 		
 		//mainMenuAdd(con);
 
-	}
+}
 
-	public static void mainMenuAddQuiz(Console con){
-		// new main menu when done
+	
 		
 		
-	}
-	public static String scoreboard(Console con){
-		TextInputFile txtScoreboard = new TextInputFile("scoreboard.txt");
-		// bubble sort
-		return "[placeholder]";
-	}
 			
 			
 	
-}
+
