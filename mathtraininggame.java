@@ -28,8 +28,9 @@ public class mathtraininggame{
 		if(chrMenu == 'p' || chrMenu == 'P'){
 			playMenu(con);
 		}else if(chrMenu == 's' || chrMenu == 'S'){
-			con.println("scoreboard");
-			// bubble sort
+			con.clear();
+			viewScoreboard(con);
+			// values not printing????
 		}else if(chrMenu == 'h' || chrMenu == 'H'){
 			
 			con.clear();
@@ -132,9 +133,7 @@ public class mathtraininggame{
 		double dblQuestions = 0;
 		double dblPercent = 0;
 		
-		for(intRow = 0; intRow < intCount; intRow++){
-			
-			
+		for(intRow = 0; intRow < intCount; intRow++){	
 			con.println(strUser+"						"+strQuizName+"		"+"SCORE:"+dblScore+"/"+dblQuestions+"	Percent:"+dblPercent+"%");
 			con.println("\n\n\n\n");
 			con.println(strQuiz[intRow][0]);
@@ -143,7 +142,6 @@ public class mathtraininggame{
 			if(strAnswer.equals(strQuiz[intRow][1]) || strAnswer.equals(strQuiz[intRow][2]) || strAnswer.equals(strQuiz[intRow][3])){
 				con.println("CORRECT");
 				//con.sleep(1000);
-				
 				dblScore++;
 				dblQuestions++;
 				con.clear();
@@ -151,83 +149,83 @@ public class mathtraininggame{
 			}else{
 				con.println("INCORRECT");
 				//con.sleep(1000);
-				
 				dblQuestions++;
 				con.clear();
 				dblPercent = dblScore / dblQuestions * 100.0;
 			}
-			
 		}
 		
-		// we need to bubble sort it in the array itself
+		// Print player score to scoreboard file
 		con.println("Printing PERCENT to scoreboard");
 		TextOutputFile txtScoreboard = new TextOutputFile("scoreboard.txt",true);
-				
 		txtScoreboard.println(strUser);
 		txtScoreboard.println(dblPercent);
-		
 		txtScoreboard.close();
-		
-		
 		con.sleep(1000);
 		con.clear();
 		
+		viewScoreboard(con);
+		/* PUTTING ALL THIS IN A METHOD
+		// Get number of rows in the scoreboard file
+		int intScoreboardRows = 0;
 		TextInputFile txtScoreboard2 = new TextInputFile("scoreboard.txt");
-		
-		
-		
 		while(!txtScoreboard2.eof()){
 			String strReadLine = txtScoreboard2.readLine();
-			intRow++;
-			System.out.println("INSIDE LOOP");
+			intScoreboardRows++;
 		}
-		
 		txtScoreboard2.close();
+
+		// Read the scoreboard into array
+		int intPlayerScores = intScoreboardRows / 2;
+		int intPlayerScores2 = intPlayerScores; 		
 		
+
 		TextInputFile txtScoreboard3 = new TextInputFile("scoreboard.txt");
-		
-	
-		String strScoreboard[][] = new String[intRow][2];
-		
-		System.out.println("Test");
-		
+		String strScoreboard[][] = new String[intPlayerScores][2];		
+		String strScoreboardName;
+		String strPercentScore;
 		while(!txtScoreboard3.eof()){
 			System.out.println("Test1");
-			strScoreboard[intRow -1][0] = txtScoreboard3.readLine();
-			strScoreboard[intRow -1][1] = txtScoreboard3.readLine();
+			strScoreboardName = txtScoreboard3.readLine();
+			strPercentScore = txtScoreboard3.readLine();
+			System.out.println("intPlayerScores=" + intPlayerScores + "|name=" + strScoreboardName +  "|score=" + strPercentScore);
+			strScoreboard[intPlayerScores -1][0] = strScoreboardName;
+			strScoreboard[intPlayerScores -1][1] = strPercentScore;
+			intPlayerScores--;
+		}
+		txtScoreboard3.close();
+				
+		// Print the scoreboard array
+		System.out.println("READ SCOREBOARD");
+		for (int intReadScoreboard = 0; intReadScoreboard < intPlayerScores2; intReadScoreboard++) {
+			System.out.print("strScoreboard[" + intReadScoreboard + "]=[0]=" + strScoreboard[intReadScoreboard][0] + "  ");
+			System.out.println("strScoreboard[" + intReadScoreboard + "]=[1]=" + strScoreboard[intReadScoreboard][1] + "  ");
 		}
 		
-		
-		System.out.println("Test2");
-		
-		
-		int intBelow;
-		int intCurrent;
+		// Bubble sort it in the array itself
+		double dblBelow;
+		double dblCurrent;
 		int intCounter;
 		int intCounter2;
 		String strTemp;
 		
-		for(intCounter2 = 0; intCounter2 < intCount - 1; intCounter2++){
+		for(intCounter2 = 0; intCounter2 < intPlayerScores2 - 1; intCounter2++){
 			
-			for(intCounter = 0; intCounter < intCount- intCounter2 -1; intCounter++){
+			for(intCounter = 0; intCounter < intPlayerScores2 - intCounter2 -1; intCounter++){
 				
-				System.out.println("JIN");
+				System.out.println("intCounter2["+intCounter2+"] intCounter["+intCounter+"]");
 				
-				intBelow = Integer.parseInt(strScoreboard[intCounter+1][1]);
-				intCurrent = Integer.parseInt(strScoreboard[intCounter][1]);
+				dblBelow = Double.parseDouble(strScoreboard[intCounter+1][1]);
+				dblCurrent = Double.parseDouble(strScoreboard[intCounter][1]);
 				
-				System.out.println("EDWARD");
+				System.out.println("doubleBelow("+dblBelow+") doubleCurrent("+dblCurrent+")");
 				
-				if(intBelow > intCurrent){
-					strTemp = strScoreboard[intCounter+1][1];
-					
-					strScoreboard[intCounter+1][1] = strScoreboard[intCounter][1];
-					strScoreboard[intCounter][1] = strTemp;
-					
+				if(dblBelow > dblCurrent){
 					strTemp = strScoreboard[intCounter+1][1];
 					strScoreboard[intCounter+1][1] = strScoreboard[intCounter][1];
 					strScoreboard[intCounter][1] = strTemp;
 					
+
 					strTemp = strScoreboard[intCounter+1][0];
 					strScoreboard[intCounter+1][0] = strScoreboard[intCounter][0];
 					strScoreboard[intCounter][0] = strTemp;
@@ -235,24 +233,232 @@ public class mathtraininggame{
 			}
 		}
 		
-		txtScoreboard2.close();
-		
-		System.out.println("Edward");
+		// Print the scoreboard array
+		System.out.println("SORTED SCOREBOARD");
+		for (int intReadScoreboard = 0; intReadScoreboard < intPlayerScores2; intReadScoreboard++) {
+			System.out.print("strScoreboard[" + intReadScoreboard + "]=[0]=" + strScoreboard[intReadScoreboard][0] + "  ");
+			System.out.println("strScoreboard[" + intReadScoreboard + "]=[1]=" + strScoreboard[intReadScoreboard][1] + "  ");
+		}
 		
 		int intCounting = 0;
-		while(intCounting < intRow){
-			con.println(strScoreboard[intRow][0]);
-			con.println(strScoreboard[intRow][1]);
+		while(intCounting < intPlayerScores2){
+			con.println(strScoreboard[intCounting][0]);
+			con.println(strScoreboard[intCounting][1]);
 			intCounting++;
-			System.out.println("Edward");
 		}
 		
 		
-		
+	*/	
 	}
+	public static void viewScoreboard(Console con){
+		
+		// Get number of rows in the scoreboard file
+		int intScoreboardRows = 0;
+		TextInputFile txtScoreboard2 = new TextInputFile("scoreboard.txt");
+		while(!txtScoreboard2.eof()){
+			// Make sure there is no extra line at the top of the file 
+			String strReadLine = txtScoreboard2.readLine();
+			intScoreboardRows++;
+			System.out.println(intScoreboardRows);
+		}
+		txtScoreboard2.close();
+
+		// Read the scoreboard into array
+		int intPlayerScores = intScoreboardRows / 2;
+		int intPlayerScores2 = intPlayerScores; 		
 		
 
+		TextInputFile txtScoreboard3 = new TextInputFile("scoreboard.txt");
+		String strScoreboard[][] = new String[intPlayerScores][2];		
+		String strScoreboardName;
+		String strPercentScore;
+		while(!txtScoreboard3.eof()){
+			strScoreboardName = txtScoreboard3.readLine();
+			strPercentScore = txtScoreboard3.readLine();
+			System.out.println("intPlayerScores=" + intPlayerScores + "|name=" + strScoreboardName +  "|score=" + strPercentScore);
+			strScoreboard[intPlayerScores -1][0] = strScoreboardName;
+			strScoreboard[intPlayerScores -1][1] = strPercentScore;
+			intPlayerScores--;
+		}
+		txtScoreboard3.close();
+				
+		// Print the scoreboard array
+		System.out.println("READ SCOREBOARD");
+		for (int intReadScoreboard = 0; intReadScoreboard < intPlayerScores2; intReadScoreboard++) {
+			System.out.print("strScoreboard[" + intReadScoreboard + "]=[0]=" + strScoreboard[intReadScoreboard][0] + "  ");
+			System.out.println("strScoreboard[" + intReadScoreboard + "]=[1]=" + strScoreboard[intReadScoreboard][1] + "  ");
+		}
 		
+		// Bubble sort it in the array itself
+		double dblBelow;
+		double dblCurrent;
+		int intCounter;
+		int intCounter2;
+		String strTemp;
+		
+		for(intCounter2 = 0; intCounter2 < intPlayerScores2 - 1; intCounter2++){
+			
+			for(intCounter = 0; intCounter < intPlayerScores2 - intCounter2 -1; intCounter++){
+				
+				System.out.println("intCounter2["+intCounter2+"] intCounter["+intCounter+"]");
+				
+				dblBelow = Double.parseDouble(strScoreboard[intCounter+1][1]);
+				dblCurrent = Double.parseDouble(strScoreboard[intCounter][1]);
+				
+				System.out.println("doubleBelow("+dblBelow+") doubleCurrent("+dblCurrent+")");
+				
+				if(dblBelow > dblCurrent){
+					strTemp = strScoreboard[intCounter+1][1];
+					strScoreboard[intCounter+1][1] = strScoreboard[intCounter][1];
+					strScoreboard[intCounter][1] = strTemp;
+					
+
+					strTemp = strScoreboard[intCounter+1][0];
+					strScoreboard[intCounter+1][0] = strScoreboard[intCounter][0];
+					strScoreboard[intCounter][0] = strTemp;
+				}
+			}
+		}
+		
+		// Print the scoreboard array
+		System.out.println("SORTED SCOREBOARD");
+		for (int intReadScoreboard = 0; intReadScoreboard < intPlayerScores2; intReadScoreboard++) {
+			System.out.print("strScoreboard[" + intReadScoreboard + "]=[0]=" + strScoreboard[intReadScoreboard][0] + "  ");
+			System.out.println("strScoreboard[" + intReadScoreboard + "]=[1]=" + strScoreboard[intReadScoreboard][1] + "  ");
+		}
+		
+		
+		int intCounting = 0;
+		while(intCounting < intPlayerScores2){
+			con.println(strScoreboard[intCounting][0]);
+			con.println(strScoreboard[intCounting][1]);
+			intCounting++;
+		}
+		
+		con.println("Press any key to go back");
+		char chrScoreboardBack = con.getChar();
+		
+		// BE AWARE - We need to make a counter so it knows if they completed atleast one quiz, it goes to mathMenu2 and not just mathMenu
+		if(chrScoreboardBack == 'a'){
+			con.clear();
+			mathMenu2(con);
+		}else{
+			con.clear();
+			mathMenu2(con);
+		}
+		
+	}
+	public static void mathMenu2(Console con){
+		BufferedImage imgBackground = con.loadImage("background.jpg");
+		con.drawImage(imgBackground, 0, 0);
+		BufferedImage imgLogo = con.loadImage("logo.png");
+		con.drawImage(imgLogo, 1045, 0);
+		con.repaint();
+		
+		con.println("PLAY (P)");
+		con.println("SCOREBOARD (S)");
+		con.println("HELP (H)");
+		con.println("ADD QUIZ (Q)");
+		char chrMenu = con.getChar();
+		
+		if(chrMenu == 'p' || chrMenu == 'P'){
+			playMenu(con);
+		}else if(chrMenu == 's' || chrMenu == 'S'){
+			viewScoreboard(con);
+		}else if(chrMenu == 'h' || chrMenu == 'H'){
+			
+			con.clear();
+			con.println("HELP:");
+			con.println("Try playing the game by pressing 'PLAY (p)' in the menu");
+			con.println("First enter your username you want displayed");
+			con.println("Then type in the name of a quiz you would like to play");
+			con.println("Make sure the quiz name is spelled correctly (including cases)");
+			con.println("You will be given a question. Try to solve it!");
+			con.println("Then enter your answer into the quiz");
+			con.println("There will always be three possible answers");
+			con.println("Good luck!");
+			con.println("Press any key to go back to the main menu");
+
+			char chrBack = con.getChar();
+			if(chrBack == 'a'){
+				con.clear();
+				mathMenu2(con);
+			}else{
+				con.clear();
+				mathMenu2(con);
+			}
+			
+		}else if(chrMenu == 'q' || chrMenu == 'q'){
+			con.clear();
+			con.println("What is the name of your quiz?");
+			String strAddQuizName = con.readLine();
+			
+			TextOutputFile txtAddQuiz = new TextOutputFile("quizzes.txt",true);
+			txtAddQuiz.println(strAddQuizName);
+			txtAddQuiz.close();
+			
+			
+			con.clear();
+			
+			con.println("What is the question?");
+			String strFirstQuestion = con.readLine();
+			con.println("Type in three answers below:");
+			String strAnswer1 = con.readLine();
+			String strAnswer2 = con.readLine();
+			String strAnswer3 = con.readLine();
+			
+			TextOutputFile txtNewQuiz = new TextOutputFile(strAddQuizName+".txt");
+			txtNewQuiz.println(strFirstQuestion);
+			txtNewQuiz.println(strAnswer1);
+			txtNewQuiz.println(strAnswer2);
+			txtNewQuiz.println(strAnswer3);
+			
+			
+			String strOtherQuestion = "";
+			
+			while(!strOtherQuestion.equalsIgnoreCase("NO")){
+				con.println("Enter another question? Type 'NO' to create the quiz");
+				// [***] check what happens if you enter NO first time around
+				strOtherQuestion = con.readLine();
+				
+				if(strOtherQuestion.equalsIgnoreCase("NO")){
+					con.println("Created quiz successfully!");
+					con.sleep(1000);
+					con.clear();
+				}else{
+					
+				
+					con.println("Type in three answers below:");
+					strAnswer1 = con.readLine();
+					strAnswer2 = con.readLine();
+					strAnswer3 = con.readLine();
+					
+					txtNewQuiz.println(strOtherQuestion);
+					txtNewQuiz.println(strAnswer1);
+					txtNewQuiz.println(strAnswer2);
+					txtNewQuiz.println(strAnswer3);
+					
+					con.clear();
+				}
+				
+			}
+			
+			txtNewQuiz.close();
+			
+			mathMenu2(con);
+			
+			
+		}else{
+			con.println("Invalid option");
+			con.println("Choose again");	
+			con.sleep(1000);
+			con.clear();
+			mathMenu2(con);
+		}
+		
+	
+	}
+	
 		
 			
 		
