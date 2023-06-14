@@ -26,7 +26,7 @@ What is 101 + 99?
 two hundred
 200
 200.0
-What is 430 + 23?
+What is 530 + 23?
 five hundred fifty-three
 553
 553.0

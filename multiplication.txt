@@ -1,0 +1,40 @@
+What is 2 x 2?
+four
+4
+4.0
+What is 3 x 2?
+six
+6
+6.0
+What is 8 x 8?
+sixty-four
+64
+64.0
+What is 4 x 5?
+twenty
+20
+20.0
+What is 10912391293898491241 x 0?
+zero
+0
+0.0
+What is 13 x 1?
+thirteen
+13
+13.0
+What is 9 x 4?
+thirty-six
+36
+36.0
+What is 1 x 9?
+nine
+9
+9.0
+What is 7 x 2?
+fourteen
+14
+14.0
+What is 5 x 9?
+forty-five
+45
+45.0

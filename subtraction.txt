@@ -1,0 +1,44 @@
+What is 2 - 2?
+zero
+0
+0.0
+What is 7 - 3?
+four
+4
+4.0
+What is 11 - 4?
+seven
+7
+7.0
+What is 21 - 4?
+seventeen
+17
+17.0
+What is 41 - 1?
+forty
+40
+40.0
+What is 10 - 9?
+one
+1
+1.0
+What is 100 - 100?
+zero
+0
+0.0
+What is 300 - 299?
+one
+1
+1.0
+What is 200 - 4?
+one hundred ninety-six
+196
+196.0
+What is 77 - 66?
+eleven
+11
+11.0
+What is 92 - 80?
+twelve
+12
+12.0

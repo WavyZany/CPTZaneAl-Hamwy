@@ -1,3 +1,7 @@
+// Math Training Game
+// Zane Al-Hamwy
+// Version 1.9
+
 import arc.*;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -7,9 +11,7 @@ public class mathtraininggame{
 		Console con = new Console("Math Training Game", 1280, 720);
 		mathMenu(con);
 		
-		// make sure to follow variable names of User interface design
-		
-	}	// CUT OFF
+	}
 	
 	// MAIN MENU METHOD
 	public static void mathMenu(Console con){
@@ -19,18 +21,18 @@ public class mathtraininggame{
 		con.drawImage(imgLogo, 1045, 0);
 		con.repaint();
 		
+		
+		// User selects an option that will take them to another method (or the help menu)
 		con.println("PLAY (P)");
 		con.println("SCOREBOARD (S)");
 		con.println("HELP (H)");
 		char chrMenu = con.getChar();
 		
-		//  [**] put a loop if they do not choose any option, than it loops back until they choose one
 		if(chrMenu == 'p' || chrMenu == 'P'){
 			playMenu(con);
 		}else if(chrMenu == 's' || chrMenu == 'S'){
 			con.clear();
 			viewScoreboard(con);
-			// values not printing????
 		}else if(chrMenu == 'h' || chrMenu == 'H'){
 			
 			con.clear();
@@ -74,6 +76,8 @@ public class mathtraininggame{
 		con.println("OPTIONS:");
 		
 		String strQuizList;
+		
+		// Going to print out all quiz names to the UI on the quizzes.txt file
 		while(!txtQuizzes.eof()){
 			strQuizList = txtQuizzes.readLine();
 			con.println(strQuizList);
@@ -88,8 +92,8 @@ public class mathtraininggame{
 		con.fillRect(0,0,1280,720);
 		con.repaint();
 		
-		//[**] Add something where if they choose a quiz not on the list, it tells them to choose again
-	
+		
+		// We take the quiz they want and append it to '.txt' to allow TextInputFile to read the file
 		strQuizName = strQuizName + ".txt";
 		TextInputFile txtQuizInitialization = new TextInputFile(strQuizName);
 		
@@ -103,11 +107,15 @@ public class mathtraininggame{
 		TextInputFile txtEntry = new TextInputFile(strQuizName);
 		int intLines = 0;
 		String strData;
+		
+		// Counting the amount of total lines in the file
 		while(!txtEntry.eof()){
 			strData = txtEntry.readLine();
 			intLines = intLines + 1;
 		}
 		txtEntry.close();
+		
+		// Divide by four as the quiz files are in groups of 4 [QUESTION][ANSWER][ANSWER]ANSWER] ... 
 		return intLines / 4;
 		
 	}
@@ -115,6 +123,8 @@ public class mathtraininggame{
 		String strOrder[][] = new String[intCount][4];
 		TextInputFile txtEntry = new TextInputFile(strQuizName);
 		int intRow;
+		
+		// Storing every thing in the file into an array then returning this array
 		for(intRow = 0; intRow < intCount; intRow++){
 			strOrder[intRow][0] = txtEntry.readLine();
 			strOrder[intRow][1] = txtEntry.readLine();
@@ -134,28 +144,38 @@ public class mathtraininggame{
 		double dblPercent = 0;
 		
 		for(intRow = 0; intRow < intCount; intRow++){	
+			
+			// This is the header display during game play
 			con.println(strUser+"						"+strQuizName+"		"+"SCORE:"+dblScore+"/"+dblQuestions+"	Percent:"+dblPercent+"%");
 			con.println("\n\n\n\n");
+			// Printing the question
 			con.println(strQuiz[intRow][0]);
 			con.println("[TYPE ANSWER BELOW]");
 			strAnswer = con.readLine();
+			
+			// If user input is equal to the string in index 1, 2 and 3, then it is correct! intRow is representative of the amount of questions
+			// We start at [intRow][1] because [intRow][0] is the question, not an answer
 			if(strAnswer.equals(strQuiz[intRow][1]) || strAnswer.equals(strQuiz[intRow][2]) || strAnswer.equals(strQuiz[intRow][3])){
 				con.println("CORRECT");
-				//con.sleep(1000);
+				con.sleep(1000);
 				dblScore++;
 				dblQuestions++;
 				con.clear();
 				dblPercent = dblScore / dblQuestions * 100.0;
 			}else{
 				con.println("INCORRECT");
-				//con.sleep(1000);
+				con.sleep(1000);
 				dblQuestions++;
 				con.clear();
 				dblPercent = dblScore / dblQuestions * 100.0;
 			}
 		}
 		
-		// Print player score to scoreboard file
+		if(dblPercent >= 100.0){
+			perfectScore(con);
+		}
+		
+		// Print player username and percent score to scoreboard file
 		con.println("Printing PERCENT to scoreboard");
 		TextOutputFile txtScoreboard = new TextOutputFile("scoreboard.txt",true);
 		txtScoreboard.println(strUser);
@@ -165,90 +185,7 @@ public class mathtraininggame{
 		con.clear();
 		
 		viewScoreboard(con);
-		/* PUTTING ALL THIS IN A METHOD
-		// Get number of rows in the scoreboard file
-		int intScoreboardRows = 0;
-		TextInputFile txtScoreboard2 = new TextInputFile("scoreboard.txt");
-		while(!txtScoreboard2.eof()){
-			String strReadLine = txtScoreboard2.readLine();
-			intScoreboardRows++;
-		}
-		txtScoreboard2.close();
-
-		// Read the scoreboard into array
-		int intPlayerScores = intScoreboardRows / 2;
-		int intPlayerScores2 = intPlayerScores; 		
 		
-
-		TextInputFile txtScoreboard3 = new TextInputFile("scoreboard.txt");
-		String strScoreboard[][] = new String[intPlayerScores][2];		
-		String strScoreboardName;
-		String strPercentScore;
-		while(!txtScoreboard3.eof()){
-			System.out.println("Test1");
-			strScoreboardName = txtScoreboard3.readLine();
-			strPercentScore = txtScoreboard3.readLine();
-			System.out.println("intPlayerScores=" + intPlayerScores + "|name=" + strScoreboardName +  "|score=" + strPercentScore);
-			strScoreboard[intPlayerScores -1][0] = strScoreboardName;
-			strScoreboard[intPlayerScores -1][1] = strPercentScore;
-			intPlayerScores--;
-		}
-		txtScoreboard3.close();
-				
-		// Print the scoreboard array
-		System.out.println("READ SCOREBOARD");
-		for (int intReadScoreboard = 0; intReadScoreboard < intPlayerScores2; intReadScoreboard++) {
-			System.out.print("strScoreboard[" + intReadScoreboard + "]=[0]=" + strScoreboard[intReadScoreboard][0] + "  ");
-			System.out.println("strScoreboard[" + intReadScoreboard + "]=[1]=" + strScoreboard[intReadScoreboard][1] + "  ");
-		}
-		
-		// Bubble sort it in the array itself
-		double dblBelow;
-		double dblCurrent;
-		int intCounter;
-		int intCounter2;
-		String strTemp;
-		
-		for(intCounter2 = 0; intCounter2 < intPlayerScores2 - 1; intCounter2++){
-			
-			for(intCounter = 0; intCounter < intPlayerScores2 - intCounter2 -1; intCounter++){
-				
-				System.out.println("intCounter2["+intCounter2+"] intCounter["+intCounter+"]");
-				
-				dblBelow = Double.parseDouble(strScoreboard[intCounter+1][1]);
-				dblCurrent = Double.parseDouble(strScoreboard[intCounter][1]);
-				
-				System.out.println("doubleBelow("+dblBelow+") doubleCurrent("+dblCurrent+")");
-				
-				if(dblBelow > dblCurrent){
-					strTemp = strScoreboard[intCounter+1][1];
-					strScoreboard[intCounter+1][1] = strScoreboard[intCounter][1];
-					strScoreboard[intCounter][1] = strTemp;
-					
-
-					strTemp = strScoreboard[intCounter+1][0];
-					strScoreboard[intCounter+1][0] = strScoreboard[intCounter][0];
-					strScoreboard[intCounter][0] = strTemp;
-				}
-			}
-		}
-		
-		// Print the scoreboard array
-		System.out.println("SORTED SCOREBOARD");
-		for (int intReadScoreboard = 0; intReadScoreboard < intPlayerScores2; intReadScoreboard++) {
-			System.out.print("strScoreboard[" + intReadScoreboard + "]=[0]=" + strScoreboard[intReadScoreboard][0] + "  ");
-			System.out.println("strScoreboard[" + intReadScoreboard + "]=[1]=" + strScoreboard[intReadScoreboard][1] + "  ");
-		}
-		
-		int intCounting = 0;
-		while(intCounting < intPlayerScores2){
-			con.println(strScoreboard[intCounting][0]);
-			con.println(strScoreboard[intCounting][1]);
-			intCounting++;
-		}
-		
-		
-	*/	
 	}
 	public static void viewScoreboard(Console con){
 		
@@ -256,7 +193,7 @@ public class mathtraininggame{
 		int intScoreboardRows = 0;
 		TextInputFile txtScoreboard2 = new TextInputFile("scoreboard.txt");
 		while(!txtScoreboard2.eof()){
-			// Make sure there is no extra line at the top of the file 
+			// Make sure there is no extra line at the top of the file for .eof() to work
 			String strReadLine = txtScoreboard2.readLine();
 			intScoreboardRows++;
 			System.out.println(intScoreboardRows);
@@ -264,10 +201,11 @@ public class mathtraininggame{
 		txtScoreboard2.close();
 
 		// Read the scoreboard into array
+		// We divided by 2 because the file format of the scoreboard is [USER][SCORE]
 		int intPlayerScores = intScoreboardRows / 2;
 		int intPlayerScores2 = intPlayerScores; 		
 		
-
+		// All of this is just putting everything into array
 		TextInputFile txtScoreboard3 = new TextInputFile("scoreboard.txt");
 		String strScoreboard[][] = new String[intPlayerScores][2];		
 		String strScoreboardName;
@@ -276,13 +214,14 @@ public class mathtraininggame{
 			strScoreboardName = txtScoreboard3.readLine();
 			strPercentScore = txtScoreboard3.readLine();
 			System.out.println("intPlayerScores=" + intPlayerScores + "|name=" + strScoreboardName +  "|score=" + strPercentScore);
+			// We do -1 because remember that indexes start at 0. Without it, we would get index out of range
 			strScoreboard[intPlayerScores -1][0] = strScoreboardName;
 			strScoreboard[intPlayerScores -1][1] = strPercentScore;
 			intPlayerScores--;
 		}
 		txtScoreboard3.close();
 				
-		// Print the scoreboard array
+		// Printing the scoreboard array to command window inorder to debug
 		System.out.println("READ SCOREBOARD");
 		for (int intReadScoreboard = 0; intReadScoreboard < intPlayerScores2; intReadScoreboard++) {
 			System.out.print("strScoreboard[" + intReadScoreboard + "]=[0]=" + strScoreboard[intReadScoreboard][0] + "  ");
@@ -327,7 +266,9 @@ public class mathtraininggame{
 			System.out.println("strScoreboard[" + intReadScoreboard + "]=[1]=" + strScoreboard[intReadScoreboard][1] + "  ");
 		}
 		
+		con.clear();
 		
+		// Printing it to the screen
 		int intCounting = 0;
 		while(intCounting < intPlayerScores2){
 			con.println(strScoreboard[intCounting][0]);
@@ -338,7 +279,6 @@ public class mathtraininggame{
 		con.println("Press any key to go back");
 		char chrScoreboardBack = con.getChar();
 		
-		// BE AWARE - We need to make a counter so it knows if they completed atleast one quiz, it goes to mathMenu2 and not just mathMenu
 		if(chrScoreboardBack == 'a'){
 			con.clear();
 			mathMenu2(con);
@@ -348,6 +288,7 @@ public class mathtraininggame{
 		}
 		
 	}
+	// This is the second math menu. The only change is now you have another option to Add Quiz (Q)
 	public static void mathMenu2(Console con){
 		BufferedImage imgBackground = con.loadImage("background.jpg");
 		con.drawImage(imgBackground, 0, 0);
@@ -391,10 +332,10 @@ public class mathtraininggame{
 		}else if(chrMenu == 'q' || chrMenu == 'q'){
 			con.clear();
 			con.println("What is the name of your quiz?");
-			String strAddQuizName = con.readLine();
+			String strNewQuiz = con.readLine();
 			
 			TextOutputFile txtAddQuiz = new TextOutputFile("quizzes.txt",true);
-			txtAddQuiz.println(strAddQuizName);
+			txtAddQuiz.println(strNewQuiz);
 			txtAddQuiz.close();
 			
 			
@@ -407,7 +348,8 @@ public class mathtraininggame{
 			String strAnswer2 = con.readLine();
 			String strAnswer3 = con.readLine();
 			
-			TextOutputFile txtNewQuiz = new TextOutputFile(strAddQuizName+".txt");
+			// Getting first question and storing it into file. We do this because every quiz needs atleast one question
+			TextOutputFile txtNewQuiz = new TextOutputFile(strNewQuiz+".txt");
 			txtNewQuiz.println(strFirstQuestion);
 			txtNewQuiz.println(strAnswer1);
 			txtNewQuiz.println(strAnswer2);
@@ -416,6 +358,7 @@ public class mathtraininggame{
 			
 			String strOtherQuestion = "";
 			
+			// Getting other questions to store it into the same file
 			while(!strOtherQuestion.equalsIgnoreCase("NO")){
 				con.println("Enter another question? Type 'NO' to create the quiz");
 				// [***] check what happens if you enter NO first time around
@@ -455,21 +398,36 @@ public class mathtraininggame{
 			con.clear();
 			mathMenu2(con);
 		}
+	}
+	public static void perfectScore(Console con){
+		con.clear();
+		con.println("Well done, you got 100%!");
 		
-	
+		int intX = 500;
+		int intY = 200;
+		
+		// Making a cool crown drawing
+		con.setDrawColor(Color.YELLOW);
+		con.fillRect(0 + intX, 300 + intY, 400, 80);
+		
+		con.fillRect(0 + intX, 250 + intY, 40, 100);
+		con.fillRect(120 + intX, 250 + intY, 40, 100);
+		con.fillRect(240 + intX, 250 + intY, 40, 100);
+		con.fillRect(360 + intX, 250 + intY, 40, 100);
+		
+		con.setDrawColor(Color.RED);
+		con.fillRect(0 + intX, 320 + intY, 40, 40);
+		con.fillRect(120 + intX, 320 + intY, 40, 40);
+		con.fillRect(240 + intX, 320 + intY, 40, 40);
+		con.fillRect(360 + intX, 320 + intY, 40, 40);
+		
+		con.repaint();
+		
+		con.sleep(3000);
+		con.clear();
+		
+		
 	}
 	
-		
-			
-		
-		//mainMenuAdd(con);
 
 }
-
-	
-		
-		
-			
-			
-	
-
